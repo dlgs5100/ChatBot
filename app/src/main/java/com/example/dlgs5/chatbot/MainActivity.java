@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
         RetrieveFeedTask task = new RetrieveFeedTask();
         task.execute(message.getContent());
 
-        edtChatbox.setText("");
         messageAdapter.notifyDataSetChanged();
         recyclerView.scrollToPosition(messageList.size() - 1);
+        edtChatbox.setText("");
 
     }
 
@@ -90,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("respond", s);
+            message = new Message(1, getTime(), s);   //0 represent for user
+            messageList.add(message);
+            messageAdapter.notifyDataSetChanged();
+            recyclerView.scrollToPosition(messageList.size() - 1);
         }
     }
     private String getText(String query) throws UnsupportedEncodingException {
